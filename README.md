@@ -1,5 +1,3 @@
-# Express backend boilerplate
+# Portfolio Backend
 
--- this repo is intended to be a general boilerplate to get started on a node backend with express with authentication using json web tokens
-
-## Must add a personalized .env file
+-- this backend will handle messages coming through the contact form in my portfolio frontend
