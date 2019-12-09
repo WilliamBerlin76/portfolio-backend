@@ -25,13 +25,14 @@ router.post('/', (req, res) => {
         });
 });
 
+// GET ALL MESSAGES
 router.get('/', (req, res) => {
     Messages.getMessages()
         .then(messages => {
             res.status(200).json(messages)
         })
         .catch(err => {
-            console.log('GETTING DECKS ERR', err)
+            console.log('GETTING MESSAGES ERR', err)
             res.status(500).json({error: 'there was an error retrieving the messages'})
         })
 })

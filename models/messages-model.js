@@ -17,7 +17,6 @@ async function addSender(senderInfo){
     const sender = await db('senders as s')
                     .where({senderEmail: senderInfo.senderEmail})
                     .first()
-    // console.log(senderInfo)
     if (!sender) {
         return db('senders')
                 .insert(senderInfo, 'id')
