@@ -5,7 +5,8 @@ module.exports = {
     addMessage,
     getMessages,
     getByEmail,
-    getSenderById
+    getSenderById,
+    getMessageById
 };
 
 function getByEmail(email) {
@@ -40,7 +41,15 @@ function addMessage(message){
 };
 
 function getMessages(){
-    return db.select('s.senderName', 's.senderEmail', 'm.subject', 'm.message')
+    return db.select('m.id as message_id', 's.senderName', 's.senderEmail', 'm.subject', 'm.message')
             .from('senders as s')
             .join('messages as m', 's.id', '=', 'm.sender_id')
 };
+
+function getMessageById(id){
+    return db.select('m.id as message_id', 's.senderName', 's.senderEmail', 'm.subject', 'm.message')
+            .from('messages as m')
+            .where('m.id', '=', id)
+            .join('senders as s', 's.id', '=', 'm.sender_id')
+            .first()
+}

@@ -1,7 +1,7 @@
 
 exports.up = function(knex) {
   return knex.schema.createTable('messages', tbl => {
-        tbl.increments;
+        tbl.increments();
 
         tbl.string('subject')
         tbl.string('message')
