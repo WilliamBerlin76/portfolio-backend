@@ -45,10 +45,10 @@ router.post(process.env.CONTACT, (req, res) => {
     }
     smtpTrans.sendMail(mailOpts, (error, response) => {
         if (error) {
-            
+            console.log(error)
             res.json('contact-failure')
         } else {
-            
+            console.log('i think it sent??')
             res.json('contact-success')
         }
     })
