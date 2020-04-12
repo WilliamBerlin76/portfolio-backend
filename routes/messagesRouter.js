@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+const nodemailer = require('nodemailer');
 const Messages = require('../models/messages-model');
 
 
@@ -25,6 +25,34 @@ router.post('/', (req, res) => {
         });
 });
 
+router.post(process.env.CONTACT, (req, res) => {
+    const smtpTrans = nodemailer.createTransport({
+        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: process.env.GMAIL_USER,
+            pass: process.env.GMAIL_PASS
+        }
+    });
+
+    const mailOpts = {
+        from: req.body.senderEmail,
+        to: process.env.GMAIL_USER,
+        subject: `from portfolio: ${req.body.subject}`,
+        text: `${req.body.senderName}: ${req.body.senderEmail} says ${req.body.message}` 
+    }
+    smtpTrans.sendMail(mailOpts, (error, response) => {
+        if (error) {
+            
+            res.json('contact-failure')
+        } else {
+            
+            res.json('contact-success')
+        }
+    })
+})
 // GET ALL MESSAGES
 router.get('/', (req, res) => {
     Messages.getMessages()
