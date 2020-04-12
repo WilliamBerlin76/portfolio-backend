@@ -49,7 +49,6 @@ router.post(process.env.CONTACT, (req, res) => {
             console.log(error)
             res.json('contact-failure')
         } else {
-            console.log('i think it sent??')
             res.json('contact-success')
         }
     })
