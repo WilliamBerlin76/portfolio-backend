@@ -38,12 +38,12 @@ router.post(process.env.CONTACT, (req, res) => {
     });
 
     const mailOpts = {
-        from: req.body.senderEmail,
+        from: process.env.GMAIL_USER,
         to: process.env.GMAIL_USER,
         subject: `from portfolio: ${req.body.subject}`,
         text: `${req.body.senderName}: ${req.body.senderEmail} says ${req.body.message}` 
     }
-    console.log(process.env.GMAIL_USER)
+    
     smtpTrans.sendMail(mailOpts, (error, response) => {
         if (error) {
             console.log(error)
