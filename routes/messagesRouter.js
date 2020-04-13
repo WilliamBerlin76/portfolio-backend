@@ -2,7 +2,6 @@ const router = require('express').Router();
 const nodemailer = require('nodemailer');
 const Messages = require('../models/messages-model');
 
-
 // POST TO SEND A MESSAGE TO THE DB
 router.post('/', (req, res) => {
    const senderBody = {senderName: req.body.senderName, senderEmail: req.body.senderEmail};
@@ -32,8 +31,11 @@ router.post(process.env.CONTACT, (req, res) => {
         port: 465,
         secure: true,
         auth: {
-            user: process.env.GMAIL_USER,
-            pass: process.env.GMAIL_PASS
+            type: 'OAuth2',
+            user: process.env.GMAIL_USER, 
+            clientId: process.env.CLIENT_ID,
+            clientSecret: process.env.CLIENT_SECRET,
+            refreshToken: process.env.REFRESH_TOKEN
         }
     });
 
@@ -41,7 +43,7 @@ router.post(process.env.CONTACT, (req, res) => {
         from: process.env.GMAIL_USER,
         to: process.env.GMAIL_USER,
         subject: `from portfolio: ${req.body.subject}`,
-        text: `${req.body.senderName}: ${req.body.senderEmail} says ${req.body.message}` 
+        text: `${req.body.senderName}: ${req.body.senderEmail} says:\n\n${req.body.message}` 
     }
     
     smtpTrans.sendMail(mailOpts, (error, response) => {
