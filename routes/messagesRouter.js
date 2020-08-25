@@ -26,22 +26,18 @@ router.post('/', (req, res) => {
 
 router.post(process.env.CONTACT, (req, res) => {
     const smtpTrans = nodemailer.createTransport({
-        service: 'gmail',
-        host: 'smtp.gmail.com',
+        host: 'smtp.zoho.com',
         port: 465,
         secure: true,
         auth: {
-            type: 'OAuth2',
-            user: process.env.GMAIL_USER, 
-            clientId: process.env.CLIENT_ID,
-            clientSecret: process.env.CLIENT_SECRET,
-            refreshToken: process.env.REFRESH_TOKEN
+            user: process.env.ZOHO_USER, 
+            pass: process.env.ZOHO_PASS
         }
     });
 
     const mailOpts = {
-        from: process.env.GMAIL_USER,
-        to: process.env.GMAIL_USER,
+        from: process.env.ZOHO_USER,
+        to: process.env.ZOHO_USER,
         subject: `from portfolio: ${req.body.subject}`,
         text: `${req.body.senderName}: ${req.body.senderEmail} says:\n\n${req.body.message}` 
     }
